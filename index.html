@@ -799,6 +799,32 @@
   .reveal-list li:hover { border-color: var(--accent); transform: translateX(4px); }
   .reveal-list li::before { content: '▸'; color: var(--accent); font-size: 10px; flex-shrink: 0; }
 
+  /* BEHIND BANNER */
+  .behind-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 48px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .behind-banner:hover { background: var(--surface2); }
+  .behind-arrow {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    color: var(--accent);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .behind-banner:hover .behind-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
   /* SCROLL REVEAL */
   .reveal {
     opacity: 0;
@@ -1143,25 +1169,13 @@
 </section>
 
 <!-- BEHIND THE BUILD BANNER -->
-<a href="behind.html" style="
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 32px 48px;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  text-decoration: none;
-  transition: background 0.2s;
-  position: relative;
-  overflow: hidden;
-" onmouseover="this.style.background='#111422'" onmouseout="this.style.background='var(--surface)'">
+<a href="behind.html" class="behind-banner">
   <div style="display:flex; align-items:center; gap:20px;">
     <div>
       <div style="font-family:'Syne',sans-serif; font-weight:800; font-size:24px; color:var(--text); letter-spacing:-0.5px;">Behind the Build.</div>
     </div>
   </div>
-  <div style="font-family:'Syne',sans-serif; font-size:28px; color:var(--accent); opacity:0.5; transition:opacity 0.2s, transform 0.2s;" id="bannerArrow">→</div>
+  <div class="behind-arrow">→</div>
 </a>
 
 <!-- FOOTER -->
