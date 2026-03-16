@@ -241,25 +241,52 @@
   const vid     = document.getElementById('trans-video');
   const VIDEOS  = ['videos/black_transition.mp4', 'videos/green_transition.mp4'];
 
-  function transitionOut(url) {
-    transCount++;
-    sessionStorage.setItem('transCount', transCount);
-    const src = VIDEOS[transCount % 2 === 0 ? 0 : 1];
-    overlay.style.opacity = '1';
-    overlay.style.pointerEvents = 'all';
-    vid.onended = null;
-    vid.src = src;
-    vid.currentTime = 0;
-    vid.playbackRate = 0.6;
+ function transitionOut(url) {
+  transCount++;
+  sessionStorage.setItem('transCount', transCount);
 
-    let navigated = false;
-    function go() {
-      if (navigated) return;
-      navigated = true;
-      sessionStorage.setItem('skipTransIn', '1');
-      window.location.href = url;
-    }
+  const src = VIDEOS[transCount % 2 === 0 ? 0 : 1];
 
+  overlay.style.opacity = '1';
+  overlay.style.pointerEvents = 'all';
+
+  vid.onended = null;
+  vid.src = src;
+  vid.currentTime = 0;
+
+  // Default settings
+  let fallbackTime = 1950;
+  vid.playbackRate = 0.6;
+
+  // SPECIAL RULE FOR GREEN TRANSITION
+  if (src.includes('green_transition.mp4')) {
+    fallbackTime = 2000;   // 2 seconds
+    vid.playbackRate = 1;  // play at normal speed
+  }
+
+  let navigated = false;
+
+  function go() {
+    if (navigated) return;
+    navigated = true;
+    sessionStorage.setItem('skipTransIn', '1');
+    window.location.href = url;
+  }
+
+  vid.addEventListener('ended', () => {
+    if (navigated) return;
+    navigated = true;
+    sessionStorage.removeItem('skipTransIn');
+    window.location.href = url;
+  }, { once: true });
+
+  const fallback = setTimeout(go, fallbackTime);
+
+  vid.play().catch(() => {
+    clearTimeout(fallback);
+    go();
+  });
+}
     vid.addEventListener('ended', () => {
       if (navigated) return;
       navigated = true;
