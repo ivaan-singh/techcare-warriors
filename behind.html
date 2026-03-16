@@ -131,10 +131,9 @@
 
 <div id="scroll-progress"></div>
 <div id="page-transition">
-  <svg id="trans-svg" viewBox="0 0 1 1" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <polygon id="trans-green" points="0,0 0,0 0,0" fill="#00ffb2"/>
-    <polygon id="trans-black" points="0,0 0,0 0,0" fill="#05070d"/>
-  </svg>
+  <video id="trans-video" muted playsinline preload="auto"
+    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">
+  </video>
 </div>
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
@@ -211,65 +210,45 @@
     progressBar.style.width = pct + '%';
   }, { passive: true });
 
-  // ── PAGE TRANSITION (diagonal wipe) ──
+  // ── PAGE TRANSITION (mp4 video) ──
   let transCount = parseInt(sessionStorage.getItem('transCount') || '0');
 
   const overlay = document.getElementById('page-transition');
-  const tGreen  = document.getElementById('trans-green');
-  const tBlack  = document.getElementById('trans-black');
-
-  function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-
-  function setDiagonal(p, isGreenWipe) {
-    if (isGreenWipe) {
-      const a = Math.min(p * 2, 1);
-      tGreen.setAttribute('points', `0,0 ${a},0 0,${a}`);
-      tBlack.setAttribute('points', `${a},0 1,0 1,1 0,1 0,${a}`);
-    } else {
-      const b = Math.max(1 - p * 2, 0);
-      tGreen.setAttribute('points', `0,0 1,0 ${b},1 0,1`);
-      tBlack.setAttribute('points', `1,0 1,1 ${b},1`);
-    }
-  }
-
-  function runWipe(fromP, toP, isGreenWipe, duration, onComplete) {
-    overlay.style.opacity = '1';
-    const start = performance.now();
-    function frame(now) {
-      const raw = Math.min((now - start) / duration, 1);
-      setDiagonal(fromP + (toP - fromP) * ease(raw), isGreenWipe);
-      if (raw < 1) requestAnimationFrame(frame);
-      else if (onComplete) onComplete();
-    }
-    requestAnimationFrame(frame);
-  }
+  const vid     = document.getElementById('trans-video');
+  const VIDEOS  = ['black_transition.mp4', 'green_transition.mp4'];
 
   function transitionOut(url) {
     transCount++;
     sessionStorage.setItem('transCount', transCount);
-    const isGreenWipe = transCount % 2 === 1;
+    const src = VIDEOS[transCount % 2 === 0 ? 0 : 1];
     overlay.style.opacity = '1';
     overlay.style.pointerEvents = 'all';
-    if (isGreenWipe) {
-      tGreen.setAttribute('points', '0,0 0,0 0,0');
-      tBlack.setAttribute('points', '0,0 1,0 1,1 0,1');
-    } else {
-      tGreen.setAttribute('points', '0,0 1,0 1,1 0,1');
-      tBlack.setAttribute('points', '1,1 1,1 1,1');
-    }
-    setTimeout(() => {
-      runWipe(0, 1, isGreenWipe, 700, () => { window.location.href = url; });
-    }, 250);
+    vid.src = src;
+    vid.currentTime = 0;
+    vid.playbackRate = 1;
+    vid.onended = () => { window.location.href = url; };
+    vid.play();
   }
 
   function transitionIn() {
-    const isGreenWipe = transCount % 2 === 1;
+    const src = VIDEOS[transCount % 2 === 0 ? 0 : 1];
     overlay.style.opacity = '1';
     overlay.style.pointerEvents = 'none';
-    setDiagonal(1, isGreenWipe);
-    setTimeout(() => {
-      runWipe(1, 0, isGreenWipe, 800, () => { overlay.style.opacity = '0'; });
-    }, 60);
+    vid.src = src;
+    vid.onloadedmetadata = () => {
+      vid.currentTime = vid.duration;
+      function stepBack() {
+        if (vid.currentTime <= 0) {
+          overlay.style.opacity = '0';
+          vid.pause();
+          return;
+        }
+        vid.currentTime = Math.max(vid.currentTime - (1 / 30), 0);
+        requestAnimationFrame(stepBack);
+      }
+      requestAnimationFrame(stepBack);
+    };
+    vid.load();
   }
 
   document.querySelectorAll('.nav-transition-link').forEach(link => {
