@@ -800,7 +800,7 @@
       window.location.href = url;
     }, { once: true });
 
-    const fallback = setTimeout(go, 1950);
+    const fallback = setTimeout(go, 2000);
 
     vid.play().catch(() => {
       clearTimeout(fallback);
