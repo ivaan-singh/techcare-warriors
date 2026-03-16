@@ -243,7 +243,7 @@
       window.location.href = url;
     }, { once: true });
 
-    const fallback = setTimeout(go, 1800);
+    const fallback = setTimeout(go, 1950);
     vid.play().catch(() => { clearTimeout(fallback); go(); });
   }
 
