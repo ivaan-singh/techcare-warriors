@@ -803,19 +803,12 @@ if (src.includes('green_transition.mp4')) {
     window.location.href = url;
   }
 
-  vid.addEventListener('ended', () => {
-    if (navigated) return;
-    navigated = true;
-    sessionStorage.removeItem('skipTransIn');
-    window.location.href = url;
-  }, { once: true });
+ vid.onended = go;
 
-  const fallback = setTimeout(go, fallbackTime);
+// small safety fallback in case the video fails
+setTimeout(go, fallbackTime);
 
-  vid.play().catch(() => {
-    clearTimeout(fallback);
-    go();
-  });
+vid.play().catch(go);
 }
 
     vid.addEventListener('ended', () => {
