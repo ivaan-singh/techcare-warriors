@@ -232,19 +232,27 @@
     function go() {
       if (navigated) return;
       navigated = true;
+      sessionStorage.setItem('skipTransIn', '1');
       window.location.href = url;
     }
 
-    vid.addEventListener('ended', go, { once: true });
-    const fallback = setTimeout(go, 3200);
+    vid.addEventListener('ended', () => {
+      if (navigated) return;
+      navigated = true;
+      sessionStorage.removeItem('skipTransIn');
+      window.location.href = url;
+    }, { once: true });
 
-    vid.play().catch(() => {
-      clearTimeout(fallback);
-      go();
-    });
+    const fallback = setTimeout(go, 1800);
+    vid.play().catch(() => { clearTimeout(fallback); go(); });
   }
 
   function transitionIn() {
+    if (sessionStorage.getItem('skipTransIn') === '1') {
+      sessionStorage.removeItem('skipTransIn');
+      overlay.style.opacity = '0';
+      return;
+    }
     const src = VIDEOS[transCount % 2 === 0 ? 0 : 1];
     overlay.style.opacity = '1';
     overlay.style.pointerEvents = 'none';
