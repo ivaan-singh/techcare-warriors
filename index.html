@@ -772,26 +772,45 @@
   const VIDEOS = ['videos/black_transition.mp4', 'videos/green_transition.mp4'];
 
   function transitionOut(url) {
-    transCount++;
-    sessionStorage.setItem('transCount', transCount);
-    const src = VIDEOS[transCount % 2 === 0 ? 0 : 1];
+  transCount++;
+  sessionStorage.setItem('transCount', transCount);
 
-    overlay.style.opacity = '1';
-    overlay.style.pointerEvents = 'all';
+  const src = VIDEOS[transCount % 2 === 0 ? 0 : 1];
 
-    vid.onended = null;
-    vid.src = src;
-    vid.currentTime = 0;
-    vid.playbackRate = 0.6;
+  overlay.style.opacity = '1';
+  overlay.style.pointerEvents = 'all';
 
-    let navigated = false;
-    function go() {
-      if (navigated) return;
-      navigated = true;
-      // Mark that we're doing a hard fallback so transitionIn skips the video
-      sessionStorage.setItem('skipTransIn', '1');
-      window.location.href = url;
-    }
+  vid.onended = null;
+  vid.src = src;
+  vid.currentTime = 0;
+
+  const isGreen = src.includes('green_transition.mp4');
+
+  vid.playbackRate = isGreen ? 1 : 0.6;
+
+  let navigated = false;
+
+  function go() {
+    if (navigated) return;
+    navigated = true;
+    sessionStorage.setItem('skipTransIn', '1');
+    window.location.href = url;
+  }
+
+  vid.addEventListener('ended', () => {
+    if (navigated) return;
+    navigated = true;
+    sessionStorage.removeItem('skipTransIn');
+    window.location.href = url;
+  }, { once: true });
+
+  const fallback = setTimeout(go, isGreen ? 2000 : 1950);
+
+  vid.play().catch(() => {
+    clearTimeout(fallback);
+    go();
+  });
+}
 
     vid.addEventListener('ended', () => {
       if (navigated) return;
