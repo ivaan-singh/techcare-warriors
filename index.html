@@ -778,12 +778,29 @@
 
     overlay.style.opacity = '1';
     overlay.style.pointerEvents = 'all';
+
+    // Clear any stale handlers
+    vid.onended = null;
     vid.src = src;
     vid.currentTime = 0;
     vid.playbackRate = 1;
 
-    vid.onended = () => { window.location.href = url; };
-    vid.play();
+    let navigated = false;
+    function go() {
+      if (navigated) return;
+      navigated = true;
+      window.location.href = url;
+    }
+
+    vid.addEventListener('ended', go, { once: true });
+    // Hard fallback: if video is ~1.73s, wait 2.2s max then navigate anyway
+    const fallback = setTimeout(go, 2200);
+
+    vid.play().catch(() => {
+      // If play() fails for any reason, navigate immediately
+      clearTimeout(fallback);
+      go();
+    });
   }
 
   function transitionIn(onComplete) {
