@@ -171,6 +171,18 @@
     </div>
   </div>
 
+  <!-- Hours Spent -->
+  <div class="took-row">
+    <div class="took-row-header">
+      <span class="took-label">Hours Spent</span>
+      <button class="reveal-btn" id="btnHours" onclick="revealHours()">Reveal</button>
+    </div>
+    <div class="counter-display" id="hoursDisplay">
+      <div class="counter-value" id="hoursVal">0</div>
+      <div class="counter-suffix">hours across the entire build</div>
+    </div>
+  </div>
+
   <a href="index.html" class="back-link nav-transition-link">← Back to Home Page</a>
 </main>
 
@@ -280,6 +292,29 @@
   window.addEventListener('load', transitionIn);
 
   // ── REVEAL CONTENT ──
+  function revealHours() {
+    const btn = document.getElementById('btnHours');
+    const display = document.getElementById('hoursDisplay');
+    const val = document.getElementById('hoursVal');
+    btn.classList.add('revealed');
+    btn.textContent = 'Revealed';
+    btn.disabled = true;
+    display.style.display = 'block';
+    const hours = 0;
+    const sessions = 0;
+    const target = hours * sessions;
+    const duration = 1800;
+    const start = performance.now();
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      val.textContent = Math.floor(eased * target);
+      if (progress < 1) requestAnimationFrame(step);
+      else val.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+
   function revealContent(id, btnId) {
     const content = document.getElementById(id);
     const btn = document.getElementById(btnId);
