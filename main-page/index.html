@@ -29,9 +29,10 @@
     cursor: none;
   }
 
-  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; cursor: grab; }
+  ::-webkit-scrollbar-thumb:active { cursor: grabbing; background: var(--accent2); }
 
   /* ── SCROLL PROGRESS BAR ── */
   #scroll-progress {
@@ -493,7 +494,7 @@
     <li><a href="#features">Features</a></li>
     <li><a href="#design">Design</a></li>
     <li><a href="#comparison">Compare</a></li>
-    <li><a href="behind.html" class="nav-transition-link">Behind the Build</a></li>
+    <li><a href="../behind-the-build/" class="nav-transition-link">Behind the Build</a></li>
   </ul>
   <div class="nav-tag">Codeavour 7.0</div>
 </nav>
@@ -548,15 +549,15 @@
     </div>
     <div class="problem-cards">
       <div class="p-card">
-        <div class="p-card-title">⚡ Manual Wheelchairs</div>
+        <div class="p-card-title">Manual Wheelchairs</div>
         <div class="p-card-body">Affordable at ₹1,500–₹15,000, but demand significant physical effort. Users often can't operate independently.</div>
       </div>
       <div class="p-card">
-        <div class="p-card-title">💰 Electric Wheelchairs</div>
+        <div class="p-card-title">Electric Wheelchairs</div>
         <div class="p-card-body">Overcome physical barriers, but cost ₹45,000–₹3,00,000 — completely out of reach for most users.</div>
       </div>
       <div class="p-card">
-        <div class="p-card-title">🚫 The Gap</div>
+        <div class="p-card-title">The Gap</div>
         <div class="p-card-body">No affordable, smart, and reliable middle-ground exists. Until now.</div>
       </div>
     </div>
@@ -647,7 +648,15 @@
       <div class="comp-card"><span class="comp-icon">🔧</span><div class="comp-name">Gear & Pivot Assembly</div></div>
       <div class="comp-card"><span class="comp-icon">〰️</span><div class="comp-name">Ultrasonic Sensor</div></div>
       <div class="comp-card"><span class="comp-icon">📡</span><div class="comp-name">IR Sensor</div></div>
-      <div class="comp-card"><span class="comp-icon">🗺️</span><div class="comp-name">GPS Module</div></div>
+      <div class="comp-card">
+        <span class="comp-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#ff3d3d"/>
+            <circle cx="12" cy="9" r="2.5" fill="#05070d"/>
+          </svg>
+        </span>
+        <div class="comp-name">GPS Module</div>
+      </div>
       <div class="comp-card"><span class="comp-icon">⚡</span><div class="comp-name">Dynamo Motor</div></div>
       <div class="comp-card"><span class="comp-icon">🦽</span><div class="comp-name">Wheelchair Frame</div></div>
     </div>
@@ -702,7 +711,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>Manual Wheelchair</td><td>₹1,500 – ₹15,000</td><td>Low</td><td style="color:var(--muted2)">Limited</td></tr>
+            <tr><td>Manual Wheelchair</td><td>₹1,500 – ₹15,000</td><td>Low</td><td style="color:var(--muted2)">Budget-friendly, no assist</td></tr>
+            <tr><td>Electric Wheelchair</td><td>₹45,000 – ₹3,00,000</td><td>High</td><td style="color:var(--muted2)">Expensive</td></tr>
             <tr><td>DIY Conversion Kit</td><td>₹8,000 – ₹20,000</td><td>High</td><td style="color:var(--muted2)">Unreliable</td></tr>
             <tr><td>Permobil (Electric)</td><td>₹45,000 – ₹3,00,000</td><td>Very High</td><td style="color:var(--muted2)">Premium only</td></tr>
             <tr><td>SmartDrive Assist ✦</td><td>₹5,000 – ₹10,000</td><td>Low</td><td><span class="yes">Best-in-class</span></td></tr>
@@ -714,7 +724,7 @@
 </section>
 
 <!-- BEHIND THE BUILD BANNER -->
-<a href="behind.html" class="behind-banner nav-transition-link">
+<a href="../behind-the-build/" class="behind-banner nav-transition-link">
   <div style="display:flex; align-items:center; gap:20px;">
     <div>
       <div style="font-family:'Syne',sans-serif; font-weight:800; font-size:24px; color:var(--text); letter-spacing:-0.5px;">Behind the Build.</div>
@@ -761,7 +771,7 @@
   }, { passive: true });
 
   // ── PAGE TRANSITION (mp4 video) ──
-  // even transCount → videos/black_transition.mp4 | odd → videos/green_transition.mp4
+  // even transCount → black_transition.mp4 | odd → green_transition.mp4
   // EXIT: play video forward to end → navigate
   // ENTER: play video backward from end to start → hide overlay → start typewriter
   let transCount = parseInt(sessionStorage.getItem('transCount') || '0');
@@ -769,12 +779,15 @@
   const overlay = document.getElementById('page-transition');
   const vid     = document.getElementById('trans-video');
 
-  const VIDEOS = ['videos/black_transition.mp4', 'videos/green_transition.mp4'];
+  const VIDEOS    = ['../videos/black_transition.mp4', '../videos/green_transition.mp4'];
+  const FALLBACKS = [1950, 2000]; // black=1.95s, green=2.0s
 
   function transitionOut(url) {
     transCount++;
     sessionStorage.setItem('transCount', transCount);
-    const src = VIDEOS[transCount % 2 === 0 ? 0 : 1];
+    const idx = transCount % 2 === 0 ? 0 : 1;
+    const src = VIDEOS[idx];
+    const fallbackMs = FALLBACKS[idx];
 
     overlay.style.opacity = '1';
     overlay.style.pointerEvents = 'all';
@@ -788,7 +801,6 @@
     function go() {
       if (navigated) return;
       navigated = true;
-      // Mark that we're doing a hard fallback so transitionIn skips the video
       sessionStorage.setItem('skipTransIn', '1');
       window.location.href = url;
     }
@@ -800,7 +812,7 @@
       window.location.href = url;
     }, { once: true });
 
-    const fallback = setTimeout(go, 2000);
+    const fallback = setTimeout(go, fallbackMs);
 
     vid.play().catch(() => {
       clearTimeout(fallback);
