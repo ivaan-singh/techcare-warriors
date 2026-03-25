@@ -181,7 +181,8 @@
     </div>
     <div class="counter-display" id="hoursDisplay">
       <div class="counter-value" id="hoursVal">0</div>
-      <div class="counter-suffix">hours across the entire build</div>
+      <div class="counter-suffix">working hours across the entire build — not 24hr days</div>
+      <div class="counter-suffix" style="margin-top:6px; color:var(--muted); font-size:9px;" id="hourBreakdown"></div>
     </div>
   </div>
 
@@ -354,6 +355,16 @@
       else val.textContent = target;
     }
     requestAnimationFrame(step);
+    // Breakdown: total hours → days + remaining hours (24hr clock, continuous)
+    const totalDays = Math.floor(target / 24);
+    const remainHours = target % 24;
+    const breakdown = document.getElementById('hourBreakdown');
+    let breakStr = '[ ';
+    if (totalDays > 0) breakStr += totalDays + (totalDays === 1 ? ' day' : ' days');
+    if (totalDays > 0 && remainHours > 0) breakStr += ' + ';
+    if (remainHours > 0) breakStr += remainHours + (remainHours === 1 ? ' hr' : ' hrs');
+    breakStr += ' if continuous ]';
+    breakdown.textContent = breakStr;
   }
 
   function revealContent(id, btnId) {
