@@ -107,8 +107,8 @@
   .reveal-list li { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted2); padding: 14px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 2px; display: flex; align-items: center; gap: 12px; transition: border-color 0.2s, transform 0.2s; }
   .reveal-list li:hover { border-color: var(--accent); transform: translateX(4px); }
   .reveal-list li::before { content: '▸'; color: var(--accent); font-size: 10px; flex-shrink: 0; }
-  .reveal-list li a { color: var(--accent2); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(77,159,255,0.4); transition: color 0.2s, text-decoration-color 0.2s; }
-  .reveal-list li a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+  .reveal-list li a { color: var(--accent2); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(77,159,255,0.4); transition: color 0.25s, text-decoration-color 0.25s, text-shadow 0.25s; }
+  .reveal-list li a:hover { color: var(--accent); text-decoration-color: var(--accent); text-shadow: 0 0 8px rgba(0,255,178,0.5), 0 0 20px rgba(0,255,178,0.2); }
 
   .back-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 64px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 4px; transition: color 0.2s, border-color 0.2s; }
   .back-link:hover { color: var(--accent); border-color: var(--accent); }
@@ -198,6 +198,10 @@
       </ul>
       <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin:16px 0 10px;">// Research</div>
       <ul class="reveal-list">
+        <li><a href="https://www.physio-pedia.com/Role_of_the_Wheelchair" target="_blank">Physio-Pedia — Role of the Wheelchair</a></li>
+        <li><a href="https://www.weforum.org/stories/2021/03/technology-wheelchairs-reinvention-accessibility/" target="_blank">World Economic Forum — Technology & Wheelchair Reinvention</a></li>
+        <li><a href="https://www.who.int/news/item/16-05-2022-almost-one-billion-children-and-adults-with-disabilities-and-older-persons-in-need-of-assistive-technology-denied-access--according-to-new-report" target="_blank">WHO — Assistive Technology Access Report</a></li>
+        <li><a href="https://www.theswaddle.com/almost-1-billion-people-with-physical-disabilities-lack-access-to-assistive-aids-finds-global-study" target="_blank">The Swaddle — 1 Billion People Lack Access to Assistive Aids</a></li>
       </ul>
       <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin:16px 0 10px;">// Website</div>
       <ul class="reveal-list">
@@ -335,9 +339,10 @@
       const day = d.getDay();
       if (day !== 0 && day !== 6) sessions++;
     }
-    const hours_ivaan = 15;
-    const hours_siraaj = 0;
-    const hours_utsa = 0;
+    const hours_ivaan = 28;
+    const hours_siraaj = 10;
+    const hours_utsa = 48;
+    const sir = hours_siraaj;
     const target = hours * sessions + hours_ivaan + hours_siraaj + hours_utsa;
     const duration = 1800;
     const start = performance.now();
