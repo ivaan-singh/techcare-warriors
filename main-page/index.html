@@ -457,6 +457,27 @@
   @keyframes scan { from { transform: translateY(-100%); } to { transform: translateY(100vh); } }
   .scanline { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(0,255,178,0.06), transparent); animation: scan 8s linear infinite; pointer-events: none; z-index: 0; }
 
+.endorsement-btn {
+  margin-top: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid rgba(0,255,178,0.3);
+  border-radius: 2px;
+  cursor: none;
+  transition: all 0.25s ease;
+}
+
+.endorsement-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+  
   /* RESPONSIVE */
   @media (max-width: 900px) {
     nav { padding: 16px 24px; }
