@@ -304,35 +304,8 @@
     </div>
   </div>
 
-  <!-- Endorsement Letter -->
-  <div class="took-row">
-    <div class="took-row-header">
-      <span class="took-label">Endorsement Letter</span>
-    </div>
-    <div style="margin-top:20px;">
-      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted2);line-height:1.8;margin-bottom:20px;">
-        Formally endorsed by <strong style="color:var(--text)">BraveHeart Soldier Foundation</strong> — an organisation working with ex-servicemen, their widows and dependents in association with the Ministry of Defence, India.
-      </div>
-      <div class="endorsement-card" onclick="openLightbox()">
-        <img src="/techcare-warriors/endorsement_preview.jpg" alt="BraveHeart Soldier Foundation Endorsement Letter">
-        <div class="endorsement-card-overlay">
-          <div class="endorsement-org">BraveHeart Soldier Foundation</div>
-          <div class="endorsement-hint">Click to expand →</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <a href="/techcare-warriors/main-page/" class="back-link nav-transition-link">← Back to Home Page</a>
 </main>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-  <div class="lightbox-inner">
-    <img src="/techcare-warriors/endorsement_preview.jpg" alt="Endorsement Letter Full">
-    <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
-  </div>
-</div>
 
 <footer>
   <div class="footer-brand"><a href="https://ivaansingh.com/techcare-warriors" target="_blank" class="smartdrive-link">SmartDrive Assist</a> — TechCare Warriors</div>
@@ -501,17 +474,7 @@
       setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'translateX(0)'; }, 20);
     });
   }
-  function openLightbox() {
-    document.getElementById('lightbox').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox(e) {
-    if (!e || e.target === document.getElementById('lightbox') || e.target.classList.contains('lightbox-close')) {
-      document.getElementById('lightbox').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') }); });
+
 </script>
 </body>
 </html>

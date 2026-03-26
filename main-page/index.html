@@ -722,6 +722,12 @@
         </table>
       </div>
     </div>
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <img src="endorsement_letter.pdf" alt="BraveHearts Soldier Foundation Endorsement Letter Full">
+    <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+  </div>
+</div>
   </div>
 </section>
 
@@ -965,6 +971,15 @@
     sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
     navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--accent)' : ''; });
   }, { passive: true });
+
+  function openLightbox() {
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox(e) {
+  if (!e || e.target.id === 'lightbox') {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+}
 </script>
 </body>
 </html>
