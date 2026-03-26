@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Behind the Build — SmartDrive Assist</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 <style>
   :root {
     --bg: #05070d;
@@ -116,6 +117,94 @@
   .back-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 64px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 4px; transition: color 0.2s, border-color 0.2s; }
   .back-link:hover { color: var(--accent); border-color: var(--accent); }
 
+  /* ENDORSEMENT */
+  .endorsement-card {
+    margin-top: 28px;
+    position: relative;
+    cursor: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    max-width: 320px;
+  }
+  .endorsement-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 0 24px rgba(0,255,178,0.1);
+  }
+  .endorsement-card img {
+    width: 100%;
+    display: block;
+    filter: brightness(0.92);
+    transition: filter 0.25s;
+  }
+  .endorsement-card:hover img { filter: brightness(1); }
+  .endorsement-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5,7,13,0.85) 0%, transparent 50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+  }
+  .endorsement-org {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .endorsement-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99990;
+    background: rgba(5,7,13,0.95);
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    cursor: none;
+  }
+  .lightbox.open { display: flex; animation: fadeUp 0.25s ease forwards; }
+  .lightbox-inner {
+    position: relative;
+    max-width: 680px;
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0,255,178,0.08);
+  }
+  .lightbox-inner img { width: 100%; display: block; }
+  .lightbox-close {
+    position: absolute;
+    top: 12px; right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted2);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 2px;
+    cursor: none;
+    transition: all 0.2s;
+  }
+  .lightbox-close:hover { border-color: var(--accent); color: var(--accent); }
+
   /* FOOTER */
   footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--surface); flex-wrap: wrap; gap: 12px; position: relative; z-index: 1; }
   .footer-brand { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted2); font-style: italic; }
@@ -215,8 +304,35 @@
     </div>
   </div>
 
+  <!-- Endorsement Letter -->
+  <div class="took-row">
+    <div class="took-row-header">
+      <span class="took-label">Endorsement Letter</span>
+    </div>
+    <div style="margin-top:20px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted2);line-height:1.8;margin-bottom:20px;">
+        Formally endorsed by <strong style="color:var(--text)">BraveHeart Soldier Foundation</strong> — an organisation working with ex-servicemen, their widows and dependents in association with the Ministry of Defence, India.
+      </div>
+      <div class="endorsement-card" onclick="openLightbox()">
+        <img src="/techcare-warriors/endorsement_preview.jpg" alt="BraveHeart Soldier Foundation Endorsement Letter">
+        <div class="endorsement-card-overlay">
+          <div class="endorsement-org">BraveHeart Soldier Foundation</div>
+          <div class="endorsement-hint">Click to expand →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <a href="/techcare-warriors/main-page/" class="back-link nav-transition-link">← Back to Home Page</a>
 </main>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <img src="/techcare-warriors/endorsement_preview.jpg" alt="Endorsement Letter Full">
+    <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+  </div>
+</div>
 
 <footer>
   <div class="footer-brand"><a href="https://ivaansingh.com/techcare-warriors" target="_blank" class="smartdrive-link">SmartDrive Assist</a> — TechCare Warriors</div>
@@ -385,6 +501,17 @@
       setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'translateX(0)'; }, 20);
     });
   }
+  function openLightbox() {
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(e) {
+    if (!e || e.target === document.getElementById('lightbox') || e.target.classList.contains('lightbox-close')) {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') }); });
 </script>
 </body>
 </html>
