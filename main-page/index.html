@@ -500,6 +500,21 @@
   opacity: 1;
   pointer-events: all;
 }
+  .endorsement-card {
+  width: 320px;          /* control size here */
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.endorsement-card img {
+  width: 100%;
+  height: 200px;         /* force consistent height */
+  object-fit: cover;     /* keeps it looking clean */
+  display: block;
+}
   
   /* RESPONSIVE */
   @media (max-width: 900px) {
