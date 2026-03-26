@@ -738,10 +738,14 @@
     <div style="display:flex; justify-content:center;">
       <div class="endorsement-card" onclick="openLightbox()">
         <img src="images/endorsement_preview.jpg">
-        <div class="endorsement-card-overlay">
-          <div class="endorsement-org">BraveHeart Soldier Foundation</div>
-          <div class="endorsement-hint">Click to expand →</div>
-        </div>
+<div class="endorsement-card-overlay">
+  <div class="endorsement-org">BraveHeart Soldier Foundation</div>
+  <div class="endorsement-hint">Official Endorsement</div>
+
+  <button class="endorsement-btn" onclick="event.stopPropagation(); openLightbox();">
+    View Letter →
+  </button>
+</div>
       </div>
     </div>
 
