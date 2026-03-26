@@ -799,7 +799,7 @@
 
     <div style="display:flex; justify-content:center;">
       <div class="endorsement-card" onclick="openLightbox()">
-        <img src="/techcare-warriors/endorsement_preview.jpg">
+        <img src="endorsement_preview.pdf">
         <div class="endorsement-card-overlay">
           <div class="endorsement-org">BraveHeart Soldier Foundation</div>
           <div class="endorsement-hint">Click to expand →</div>
@@ -832,7 +832,7 @@
 <!-- LIGHTBOX -->
 <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
   <span class="lightbox-close" onclick="closeLightbox()">✕</span>
-  <img src="/techcare-warriors/endorsement_full.jpg" alt="Endorsement Letter">
+  <img src="endorsement_full.docx" alt="Endorsement Letter">
 </div>
 
 <script>
@@ -874,7 +874,7 @@
   const overlay = document.getElementById('page-transition');
   const vid     = document.getElementById('trans-video');
 
-  const VIDEOS    = ['/techcare-warriors/videos/black_transition.mp4', '/techcare-warriors/videos/green_transition.mp4'];
+  const VIDEOS    = ['videos/black_transition.mp4', 'videos/green_transition.mp4'];
   const FALLBACKS = [1950, 2000]; // black=1.95s, green=2.0s
 
   function transitionOut(url) {
