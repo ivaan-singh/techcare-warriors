@@ -47,16 +47,16 @@
     transition: width 0.06s linear;
   }
 
-  /* ── PAGE TRANSITION OVERLAY ── */
   #page-transition {
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-    pointer-events: none;
-    opacity: 0;
-pointer-events: none;
-    background: #05070d;
-  }
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  pointer-events: none;
+  opacity: 0;
+  background: #05070d;
+}
     width: 100%; height: 100%;
   }
   #page-transition.fade-out { animation: transOpacOut 1.1s ease forwards; }
