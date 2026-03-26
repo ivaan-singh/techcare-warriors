@@ -1013,6 +1013,9 @@
     sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
     navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--accent)' : ''; });
   }, { passive: true });
+
+  event.stopPropagation();
+  
 </script>
 </body>
 </html>
