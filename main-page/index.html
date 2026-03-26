@@ -1014,7 +1014,16 @@
     navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--accent)' : ''; });
   }, { passive: true });
 
-  event.stopPropagation();
+  // - LIGHTBOX -
+function openLightbox() {
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox(e) {
+  if (!e || e.target.id === 'lightbox') {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+}
   
 </script>
 </body>
