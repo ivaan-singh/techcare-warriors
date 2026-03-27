@@ -164,6 +164,38 @@
     pointer-events: none;
   }
 
+ .hero-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  max-width: 1200px;
+}
+
+.hero-title {
+  flex: 1;
+}
+
+.hero-logo {
+  width: clamp(220px, 28vw, 420px); /* bigger + nicer scaling */
+  height: auto;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateX(40px);
+  animation: logoFade 0.7s ease 0.4s forwards;
+}
+
+/* smoother entrance than fadeUp */
+@keyframes logoFade {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+  
+  .hero-logo {
+  filter: drop-shadow(0 0 20px rgba(0,255,178,0.15));
+}
   /* ── TYPING EYEBROW ── */
   .hero-eyebrow {
     font-family: 'JetBrains Mono', monospace;
@@ -532,6 +564,17 @@
     .features-grid { grid-template-columns: 1fr; }
     .components-grid { grid-template-columns: repeat(2, 1fr); }
   }
+
+  @media (max-width: 900px) {
+  .hero-main {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-logo {
+    width: 200px;
+  }
+}
 </style>
 </head>
 <body>
@@ -564,11 +607,15 @@
 <section class="hero" id="hero">
   <div class="hero-eyebrow" id="eyebrow1"><span class="caret" id="caret1"></span></div>
   <div class="hero-eyebrow line2" id="eyebrow2"><span class="caret dim" id="caret2"></span></div>
+<div class="hero-main">
   <h1 class="hero-title">
     <span class="word-smart">SMART</span>
     <span class="word-drive">DRIVE</span>
     <span class="word-assist">ASSIST</span>
   </h1>
+
+  <img src="logo.svg" alt="SmartDrive Logo" class="hero-logo">
+</div>
   <div class="hero-sub">Mobility · Affordability · Innovation</div>
   <div class="hero-cta">
     <a href="#solution" class="btn-primary" onclick="document.getElementById('solution').scrollIntoView({behavior:'smooth'}); return false;">See the Solution</a>
