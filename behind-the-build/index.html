@@ -241,6 +241,7 @@
     <li><a href="/techcare-warriors/main-page/#features" class="nav-transition-link">Features</a></li>
     <li><a href="/techcare-warriors/main-page/#design" class="nav-transition-link">Design</a></li>
     <li><a href="/techcare-warriors/main-page/#comparison" class="nav-transition-link">Compare</a></li>
+    <li><a href="/techcare-warriors/main-page/#validation" class="nav-transition-link">Validation</a></li>
     <li><a href="/techcare-warriors/behind-the-build/" class="active">Behind the Build</a></li>
   </ul>
   <div class="nav-tag">Codeavour 7.0</div>
@@ -288,7 +289,7 @@
       <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">// Product (Coding & Design)</div>
       <ul class="reveal-list">
         <li><a href="https://pictoblox.ai" target="_blank">PictoBlox</a></li>
-        <li><a href="https://draw.io" target="_blank">draw.io</li>
+        <li><a href="https://draw.io" target="_blank">draw.io</a></li>
       </ul>
       <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin:16px 0 10px;">// Research</div>
       <ul class="reveal-list">
@@ -437,7 +438,8 @@
     const hours_siraaj = 10;
     const hours_utsa = 48;
     const hours_tutor = 17;
-    const target = hours * sessions + hours_ivaan + hours_siraaj + hours_utsa + hours_tutor;
+    const hours_extra = 24;
+    const target = hours * sessions + hours_ivaan + hours_siraaj + hours_utsa + hours_tutor + hours_extra;
     let finalTarget = target % 1 === 0.5 ? Math.ceil(target) : target;
     const duration = 1800;
     const start = performance.now();
